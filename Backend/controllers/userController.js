@@ -4,6 +4,9 @@ const User = require('../models/user');
 exports.createUser = async (req, res) => {
     try {
         const { Name } = req.body;
+        if (!Name) {
+            return res.status(404).json({ error: 'Name is required' });
+        }
         const newUser = new User({ Name });
         await newUser.save();
         res.status(201).json(newUser);
@@ -17,6 +20,9 @@ exports.createUser = async (req, res) => {
 exports.updateUserById = async (req, res) => {
     try {
         const { Name } = req.body;
+        if (!Name) {
+            return res.status(404).json({ error: 'Name is required' });
+        }
         const updatedUser = await User.findByIdAndUpdate(
             req.params.userId,
             { Name },

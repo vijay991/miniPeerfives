@@ -6,6 +6,10 @@ exports.createP5 = async (req, res) => {
     try {
         const { points, givenTo } = req.body;
 
+        if (!points || !givenTo) {
+            return res.status(400).json({ error: 'points and givenTo are required' });
+        }
+
         // Check if the user has sufficient P5 balance
         const givenByUser = await User.findById(req.params.id);
         if (!givenByUser) {

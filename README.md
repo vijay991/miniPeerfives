@@ -17,14 +17,14 @@ cd miniPeerfives
 
 
 cd backend
-npm i
-npm run start
+- npm i
+- npm run start
 
 # new terminal
 
 cd frontend
-npm i
-npm run start
+- npm i
+- npm run start
 
 ## Features
 - Create, edit, and view user profiles

@@ -19,10 +19,10 @@ Mini Peerfives is a simple platform that allows users to reward each other with 
 - Create and view rewards history
 
 ## Completed task
-Implemented backend API for creating, editing, and viewing users.
-Implemented backend API for P5 (Points given) - Create, read, delete.
-Implemented backend API for Reward (Points received) - Read.
-Created basic frontend structure with React.
-Implemented User List View, New User, and View User components in the frontend.
-Implemented P5 History and Reward History components in the frontend.
-Implemented New Reward component with basic form layout.
+- Implemented backend API for creating, editing, and viewing users.
+- Implemented backend API for P5 (Points given) - Create, read, delete.
+- Implemented backend API for Reward (Points received) - Read.
+- Created basic frontend structure with React.
+- Implemented User List View, New User, and View User components in the frontend.
+- Implemented P5 History and Reward History components in the frontend.
+- Implemented New Reward component with basic form layout.

@@ -3,11 +3,16 @@
 Mini Peerfives is a simple platform that allows users to reward each other with P5 points. P5 points can be given to other users as a thanking note, and users can view their P5 and reward history.
 
 ## Table of Contents
-- [Features](#features)
-- [Frontend Setup](#frontend-setup)
+- [Porject Setup](#porject)
 - [Usage](#usage)
 
-# after cloning the repo
+### Porject
+1. Clone the repository:
+
+```bash
+git clone https://github.com/vijay991/miniPeerfives.git
+cd miniPeerfives
+
 
 cd backend
 npm i

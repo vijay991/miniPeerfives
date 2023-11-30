@@ -1,84 +1,80 @@
 const Reward = require('../models/reward');
 const User = require('../models/user');
+const { ErrorHandler } = require('../middleware/errorMiddleware');
 
 // Create a new P5 transaction
-exports.createP5 = async (req, res) => {
+exports.createP5 = async (req, res, next) => {
     try {
         const { points, givenTo } = req.body;
 
         if (!points || !givenTo) {
-            return res.status(400).json({ error: 'points and givenTo are required' });
+            return new ErrorHandler({ message: 'points and givenTo are required', statusCode: 400 });
         }
 
-        // Check if the user has sufficient P5 balance
         const givenByUser = await User.findById(req.params.id);
         if (!givenByUser) {
-            return res.status(400).json({ error: 'givenBy user not found' });
+            throw new ErrorHandler({ message: 'givenBy user not found', statusCode: 404 });
         }
+
         if (givenByUser.P5Balance < points) {
-            return res.status(400).json({ error: 'Insufficient P5 balance' });
+            throw new ErrorHandler({ message: 'Insufficient P5 balance', statusCode: 400 });
         }
+
         if (parseInt(points) > 100) {
-            return res.status(400).json({ error: 'User can not reward more than 100 P5' });
+            throw new ErrorHandler({ message: 'User can not reward more than 100 P5', statusCode: 400 });
         }
 
-        // Check if the user is trying to give P5 to themselves
         if (givenByUser.Name === givenTo) {
-            return res.status(400).json({ error: 'Cannot give P5 points to yourself' });
+            throw new ErrorHandler({ message: 'Cannot give P5 points to yourself', statusCode: 400 });
         }
 
-        // Deduct P5 from the user
         givenByUser.P5Balance -= points;
         await givenByUser.save();
 
-        // Add P5 to the recipient
         const givenToUser = await User.findOne({ Name: givenTo });
         if (!givenToUser) {
-            return res.status(404).json({ error: 'Recipient user not found' });
+            throw new ErrorHandler({ message: 'Recipient user not found', statusCode: 404 });
         }
+
         givenToUser.RewardBalance += points;
         await givenToUser.save();
 
-        // Create the P5 transaction
         const newP5 = new Reward({ points, givenByName: givenByUser.Name, givenToName: givenToUser.Name, givenBy: givenByUser.id, givenTo: givenToUser.id });
         await newP5.save();
 
         res.status(201).json(newP5);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        next(new ErrorHandler(error))
     }
 };
 
 // Get all P5 transactions
-exports.getAllP5 = async (req, res) => {
+exports.getAllP5 = async (req, res, next) => {
     try {
         const userId = req.params.id;
-
         const p5Transactions = await Reward.find({ givenBy: userId });
         res.status(200).json(p5Transactions);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        next(new ErrorHandler(error))
     }
 };
 
 // Delete a P5 transaction by ID
-exports.deleteP5ById = async (req, res) => {
+exports.deleteP5ById = async (req, res, next) => {
     try {
         const deletedP5 = await Reward.findByIdAndDelete(req.params.p5Id);
         if (!deletedP5) {
-            return res.status(404).json({ error: 'P5 transaction not found' });
+            throw new ErrorHandler({ message: 'P5 transaction not found', statusCode: 404 });
         }
 
-        // Retrieve information about the deleted P5 transaction
         const { points, givenBy, givenTo } = deletedP5;
 
-        // Add back the deducted P5 points to the user who initiated the transaction
         const givenByUser = await User.findOne({ Name: givenBy });
         if (!givenByUser) {
-            return res.status(404).json({ error: 'User who initiated the transaction not found' });
+            throw new ErrorHandler({ message: 'User who initiated the transaction not found', statusCode: 404 });
         }
+
         givenByUser.P5Balance += points;
         await givenByUser.save();
 
@@ -89,7 +85,6 @@ exports.deleteP5ById = async (req, res) => {
         res.status(200).json(deletedP5);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        next(new ErrorHandler(error))
     }
 };
-

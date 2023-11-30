@@ -41,7 +41,7 @@ const NewReward = () => {
             }
 
             // Make API request to create a new reward
-            await api.post(`/users/${id}/rewards`, { points, givenTo: selectedUser });
+            await api.post(`/users/${id}/p5`, { points, givenTo: selectedUser });
 
             // Redirect back to the Reward History view
             navigate(`/${id}/rewards`);
@@ -66,7 +66,7 @@ const NewReward = () => {
                     onChange={(e) => setSelectedUser(e.target.value)}
                 >
                     {usersList.map((user) => (
-                        <option key={user._id} value={user._id}>
+                        <option key={user._id} value={user.Name}>
                             {user.Name}
                         </option>
                     ))}

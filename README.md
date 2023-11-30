@@ -4,7 +4,8 @@ Mini Peerfives is a simple platform that allows users to reward each other with 
 
 ## Table of Contents
 - [Porject Setup](#porject)
-- [Usage](#usage)
+- [Features](#features)
+- [Completed task](#completed-task)
 
 ## Porject
 1. Clone the repository:

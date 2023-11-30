@@ -6,12 +6,13 @@ Mini Peerfives is a simple platform that allows users to reward each other with 
 - [Porject Setup](#porject)
 - [Usage](#usage)
 
-### Porject
+## Porject
 1. Clone the repository:
 
 ```bash
 git clone https://github.com/vijay991/miniPeerfives.git
 cd miniPeerfives
+```
 
 
 cd backend

@@ -7,8 +7,8 @@ router.post('/', userController.createUser);
 
 //Get all users
 router.get('/', userController.getAllUsers)
-
+router.get('/:id', userController.getUserById)
 // Update a user by ID
-router.put('/:userId', userController.updateUserById);
+router.put('/:id', userController.updateUserById);
 
 module.exports = router;

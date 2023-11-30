@@ -22,9 +22,6 @@ app.use(cors(corsOptions))
 app.use('/users', userRoutes);
 app.use('/users', p5Routes);
 app.use('/users', rewardRoutes);
-
-app.use(errorMiddleware)
-
 app.listen(port, () => {
     console.log(`server is running on ${port}.`);
 })

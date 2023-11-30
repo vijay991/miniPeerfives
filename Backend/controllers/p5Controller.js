@@ -40,7 +40,7 @@ exports.createP5 = async (req, res) => {
         await givenToUser.save();
 
         // Create the P5 transaction
-        const newP5 = new Reward({ points, givenBy: givenByUser.id, givenTo: givenToUser.id });
+        const newP5 = new Reward({ points, givenByName: givenByUser.Name, givenToName: givenToUser.Name, givenBy: givenByUser.id, givenTo: givenToUser.id });
         await newP5.save();
 
         res.status(201).json(newP5);

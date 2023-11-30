@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../services/api'; // Assuming you have an api service
+import api from '../services/api';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -18,7 +18,7 @@ const UserList = () => {
         };
 
         fetchUsers();
-    }, []); // Empty dependency array means this effect runs once after the initial render
+    }, []);
 
     return (
         <div>
@@ -39,13 +39,13 @@ const UserList = () => {
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
-                        <tr key={user.id}>
+                        <tr key={user._id}>
                             <td>{index + 1}</td>
                             <td>{user.Name}</td>
                             <td>{user.P5Balance}</td>
                             <td>{user.RewardBalance}</td>
                             <td>
-                                <Link to={`/${user.id}`}>
+                                <Link to={`/${user._id}`}>
                                     <button>Login</button>
                                 </Link>
                             </td>

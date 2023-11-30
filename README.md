@@ -4,13 +4,20 @@ Mini Peerfives is a simple platform that allows users to reward each other with 
 
 ## Table of Contents
 - [Features](#features)
-- [Project Structure](#project-structure)
-- [Backend Setup](#backend-setup)
-- [API Endpoints](#api-endpoints)
 - [Frontend Setup](#frontend-setup)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+
+# after cloning the repo
+
+cd backend
+npm i
+npm run start
+
+# new terminal
+
+cd frontend
+npm i
+npm run start
 
 ## Features
 - Create, edit, and view user profiles

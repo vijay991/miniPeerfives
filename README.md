@@ -13,35 +13,16 @@ Mini Peerfives is a simple platform that allows users to reward each other with 
 - [License](#license)
 
 ## Features
-
 - Create, edit, and view user profiles
 - Give and receive P5 points
 - View P5 and reward history
-- Create and view rewards
-- Basic user authentication (if needed)
+- Create and view rewards history
 
-## Project Structure
-
-The project is structured as follows:
-
-```text
-mini-peerfives-backend/
-|-- config/
-|   |-- db.js
-|-- controllers/
-|   |-- userController.js
-|   |-- p5Controller.js
-|   |-- rewardController.js
-|-- middleware/
-|   |-- errorMiddleware.js
-|-- models/
-|   |-- User.js
-|   |-- P5.js
-|   |-- Reward.js
-|-- routes/
-|   |-- userRoutes.js
-|   |-- p5Routes.js
-|   |-- rewardRoutes.js
-|-- .env
-|-- app.js
-|-- server.js
+## Completed task
+Implemented backend API for creating, editing, and viewing users.
+Implemented backend API for P5 (Points given) - Create, read, delete.
+Implemented backend API for Reward (Points received) - Read.
+Created basic frontend structure with React.
+Implemented User List View, New User, and View User components in the frontend.
+Implemented P5 History and Reward History components in the frontend.
+Implemented New Reward component with basic form layout.

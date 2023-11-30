@@ -41,32 +41,32 @@ const P5History = () => {
     };
 
     return (
-        <div>
+        <div className="table-container">
             <h1>P5 History</h1>
             <p>P5 Balance: {p5Balance}</p>
 
             <Link to={`/${id}/rewards/new`}>
-                <button>Create New Reward</button>
+                <button className="table-cell-button">Create New Reward</button>
             </Link>
 
-            <table>
+            <table className="table-container">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Date-Time</th>
-                        <th>P5 given</th>
-                        <th>User Name</th>
-                        <th>Delete</th>
+                    <tr className="table-header-row">
+                        <th className="table-cell">#</th>
+                        <th className="table-cell">Date-Time</th>
+                        <th className="table-cell">P5 given</th>
+                        <th className="table-cell">User Name</th>
+                        <th className="table-cell">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     {p5History.map((p5, index) => (
-                        <tr key={p5._id}>
+                        <tr key={p5._id} className="table-cell">
                             <td>{index + 1}</td>
                             <td>{p5.datetimeStamp}</td>
                             <td>{p5.points}</td>
                             <td>{p5.givenToName}</td>
-                            <td>
+                            <td className="table-cell-button">
                                 <button onClick={() => handleDeleteP5(p5._id)}>Delete</button>
                             </td>
                         </tr>

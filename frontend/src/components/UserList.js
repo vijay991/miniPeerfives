@@ -27,24 +27,24 @@ const UserList = () => {
                 <button>Create New User</button>
             </Link>
 
-            <table>
+            <table className="table-container">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>P5 Balance</th>
-                        <th>Reward Balance</th>
-                        <th>Login</th>
+                    <tr className="table-header-row">
+                        <th className="table-cell">#</th>
+                        <th className="table-cell">Name</th>
+                        <th className="table-cell">P5 Balance</th>
+                        <th className="table-cell">Reward Balance</th>
+                        <th className="table-cell">Login</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user, index) => (
-                        <tr key={user._id}>
+                        <tr key={user._id} className="table-cell">
                             <td>{index + 1}</td>
                             <td>{user.Name}</td>
                             <td>{user.P5Balance}</td>
                             <td>{user.RewardBalance}</td>
-                            <td>
+                            <td className="table-cell-button">
                                 <Link to={`/${user._id}`}>
                                     <button>Login</button>
                                 </Link>

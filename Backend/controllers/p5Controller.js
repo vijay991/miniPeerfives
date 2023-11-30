@@ -63,6 +63,12 @@ exports.getAllP5 = async (req, res, next) => {
 // Delete a P5 transaction by ID
 exports.deleteP5ById = async (req, res, next) => {
     try {
+
+        const givenByUser = await User.findById(req.params.id);
+        if (!givenByUser) {
+            throw new ErrorHandler({ message: 'User who initiated the transaction not found', statusCode: 404 });
+        }
+
         const deletedP5 = await Reward.findByIdAndDelete(req.params.p5Id);
         if (!deletedP5) {
             throw new ErrorHandler({ message: 'P5 transaction not found', statusCode: 404 });
@@ -70,17 +76,15 @@ exports.deleteP5ById = async (req, res, next) => {
 
         const { points, givenBy, givenTo } = deletedP5;
 
-        const givenByUser = await User.findOne({ Name: givenBy });
-        if (!givenByUser) {
-            throw new ErrorHandler({ message: 'User who initiated the transaction not found', statusCode: 404 });
-        }
 
         givenByUser.P5Balance += points;
         await givenByUser.save();
 
-        const givenToUser = await User.findOne({ Name: givenTo });
-        givenToUser.RewardBalance -= points;
-        await givenToUser.save();
+        const givenToUser = await User.findById(givenTo);
+        if (givenToUser) {
+            givenToUser.RewardBalance -= points;
+            await givenToUser.save();
+        }
 
         res.status(200).json(deletedP5);
     } catch (error) {

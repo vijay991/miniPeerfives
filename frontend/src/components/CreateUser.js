@@ -41,8 +41,8 @@ const CreateNewUser = () => {
                 onChange={(e) => setName(e.target.value)}
             />
 
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
+            <div><button onClick={handleSave}>Save</button></div>
+            <div><button onClick={handleCancel}>Cancel</button></div>
         </div>
     );
 };

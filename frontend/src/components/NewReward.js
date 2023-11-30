@@ -44,7 +44,7 @@ const NewReward = () => {
             await api.post(`/users/${id}/p5`, { points, givenTo: selectedUser });
 
             // Redirect back to the Reward History view
-            navigate(`/${id}/rewards`);
+            navigate(`/${id}/p5`);
         } catch (error) {
             console.error('Error creating new reward:', error);
         }
@@ -52,7 +52,7 @@ const NewReward = () => {
 
     const handleCancel = () => {
         // Redirect back to the Reward History view
-        navigate(`/${id}/rewards`);
+        navigate(`/${id}/p5`);
     };
 
     return (
@@ -65,6 +65,7 @@ const NewReward = () => {
                     value={selectedUser}
                     onChange={(e) => setSelectedUser(e.target.value)}
                 >
+                    <option value="" disabled>Select a user</option>
                     {usersList.map((user) => (
                         <option key={user._id} value={user.Name}>
                             {user.Name}
@@ -82,16 +83,18 @@ const NewReward = () => {
                 />
 
                 <p>User's P5 Balance: {userP5Balance}</p>
+                <div>
+                    <button type="submit" disabled={!selectedUser || points <= 0 || points > 100 || points > userP5Balance}>
+                        Submit
+                    </button>
+                </div>
 
-                <button type="submit" disabled={points <= 0 || points > 100 || points > userP5Balance}>
-                    Submit
-                </button>
-
-                <button type="button" onClick={handleCancel}>
+                <div> <button type="button" onClick={handleCancel}>
                     Cancel
                 </button>
-            </form>
-        </div>
+                </div>
+            </form >
+        </div >
     );
 };
 

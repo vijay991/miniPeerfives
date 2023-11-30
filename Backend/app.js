@@ -5,7 +5,6 @@ const cors = require("cors")
 const userRoutes = require('./routes/userRoutes');
 const p5Routes = require('./routes/p5Routes');
 const rewardRoutes = require('./routes/rewardRoutes');
-const { errorMiddleware } = require('./middleware/errorMiddleware')
 
 const app = express()
 const port = process.env.PORT || 9002

@@ -11,10 +11,24 @@ const RewardHistory = () => {
     useEffect(() => {
         const fetchRewardData = async () => {
             try {
-                const rewardHistoryResponse = await api.get(`/users/${id}/rewards`);
+                let rewardHistoryResponse = await api.get(`/users/${id}/rewards`);
                 const user = await api.get(`/users/${id}`);
-                setRewardBalance(user.RewardBalance);
-                setRewardHistory(rewardHistoryResponse);
+
+                const promises = rewardHistoryResponse.map(async (p5Record) => {
+                    const user = await api.get(`/users/${p5Record.givenBy}`);
+                    p5Record.givenByName = user.Name;
+                    return p5Record;
+                });
+
+                Promise.all(promises)
+                    .then((updatedRewardHistory) => {
+                        rewardHistoryResponse = updatedRewardHistory;
+                        setRewardHistory(rewardHistoryResponse);
+                        setRewardBalance(user.RewardBalance);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             } catch (error) {
                 console.error('Error fetching Rewards history:', error);
             }
@@ -22,8 +36,6 @@ const RewardHistory = () => {
 
         fetchRewardData();
     }, [id]);
-
-
 
     return (
         <div className="table-container">

@@ -11,11 +11,26 @@ const P5History = () => {
     useEffect(() => {
         const fetchP5Data = async () => {
             try {
-                const p5HistoryResponse = await api.get(`/users/${id}/p5`);
+                let p5HistoryResponse = await api.get(`/users/${id}/p5`);
+
+                const promises = p5HistoryResponse.map(async (p5Record) => {
+                    const user = await api.get(`/users/${p5Record.givenTo}`);
+                    p5Record.givenToName = user.Name;
+                    return p5Record;
+                });
+
+                Promise.all(promises)
+                    .then((updatedP5HistoryResponse) => {
+                        // Update p5HistoryResponse with the resolved values
+                        p5HistoryResponse = updatedP5HistoryResponse;
+                        setP5History(p5HistoryResponse);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
 
                 const user = await api.get(`/users/${id}`);
                 setP5Balance(user.P5Balance);
-                setP5History(p5HistoryResponse);
             } catch (error) {
                 console.error('Error fetching P5 history:', error);
             }

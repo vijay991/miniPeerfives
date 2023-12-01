@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import api from '../services/api';
 
 const RewardHistory = () => {
@@ -11,10 +11,24 @@ const RewardHistory = () => {
     useEffect(() => {
         const fetchRewardData = async () => {
             try {
-                const rewardHistoryResponse = await api.get(`/users/${id}/rewards`);
+                let rewardHistoryResponse = await api.get(`/users/${id}/rewards`);
                 const user = await api.get(`/users/${id}`);
-                setRewardBalance(user.RewardBalance);
-                setRewardHistory(rewardHistoryResponse);
+
+                const promises = rewardHistoryResponse.map(async (p5Record) => {
+                    const user = await api.get(`/users/${p5Record.givenBy}`);
+                    p5Record.givenByName = user.Name;
+                    return p5Record;
+                });
+
+                Promise.all(promises)
+                    .then((updatedRewardHistory) => {
+                        rewardHistoryResponse = updatedRewardHistory;
+                        setRewardHistory(rewardHistoryResponse);
+                        setRewardBalance(user.RewardBalance);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             } catch (error) {
                 console.error('Error fetching Rewards history:', error);
             }
@@ -24,21 +38,21 @@ const RewardHistory = () => {
     }, [id]);
 
     return (
-        <div>
+        <div className="table-container">
             <h1>Reward History</h1>
             <p>Rewards Balance: {rewardBalance}</p>
-            <table>
+            <table className="table-container">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Date-Time</th>
-                        <th>Rewards received</th>
-                        <th>User Name</th>
+                    <tr className="table-header-row">
+                        <th className="table-cell">#</th>
+                        <th className="table-cell">Date-Time</th>
+                        <th className="table-cell">Rewards received</th>
+                        <th className="table-cell">User Name</th>
                     </tr>
                 </thead>
                 <tbody>
                     {rewardHistory.map((reward, index) => (
-                        <tr key={reward._id}>
+                        <tr key={reward._id} className="table-cell">
                             <td>{index + 1}</td>
                             <td>{reward.datetimeStamp}</td>
                             <td>{reward.points}</td>

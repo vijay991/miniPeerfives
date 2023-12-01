@@ -70,11 +70,11 @@ const ViewUser = () => {
                 <button onClick={handleSave}>Save</button>
             </div>
 
-            <div style={{ marginTop: '10px' }}>
+            <div>
                 <button onClick={handleViewP5History}>View P5 History (P5 Balance: {loggedInUserP5Balance})</button>
             </div>
 
-            <div style={{ marginTop: '10px' }}>
+            <div>
                 <button onClick={handleViewRewardHistory}>View Reward History (Reward Balance: {loggedInUserRewardBalance})</button>
             </div>
         </div>

@@ -2,6 +2,7 @@ require('dotenv').config()
 require('./config/db')
 const express = require('express')
 const cors = require("cors")
+const { errorMiddleware } = require('./middleware/errorMiddleware')
 const userRoutes = require('./routes/userRoutes');
 const p5Routes = require('./routes/p5Routes');
 const rewardRoutes = require('./routes/rewardRoutes');
@@ -22,6 +23,7 @@ app.use(cors(corsOptions))
 app.use('/users', userRoutes);
 app.use('/users', p5Routes);
 app.use('/users', rewardRoutes);
+app.use(errorMiddleware)
 app.listen(port, () => {
     console.log(`server is running on ${port}.`);
 })
